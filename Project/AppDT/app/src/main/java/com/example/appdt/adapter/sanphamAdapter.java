@@ -35,10 +35,10 @@ public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) 
 @Override
 public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         sanpham sanpham = array.get(position);
-        holder.txtten.setText(sanpham.getTensp());
+        holder.txtten.setText(sanpham.getTensanpham());
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-        holder.txtgia.setText("Giá:" + decimalFormat.format(Double.parseDouble(sanpham.getGiasp()) )+ "Vnd");
-        Glide.with(context).load(sanpham.getHinhanh()).into(holder.imghinhanh);
+        holder.txtgia.setText("Giá:" + decimalFormat.format(Double.parseDouble(sanpham.getGiasanpham()) )+ "Vnd");
+        Glide.with(context).load(sanpham.getHinhanhsanpham()).into(holder.imghinhanh);
 
         }
 

@@ -4,21 +4,19 @@ import java.util.List;
 
 public class sanpham {
      int id;
-    String tensp;
-    String hinhanh;
-     String giasp;
-     String mota;
-     int loaisp;
+    String tensanpham;
+    String hinhanhsanpham;
+     String giasanpham;
+     String motasanpham;
+     int idloaisanpham;
 
-
-    public sanpham(int id, String tensp, String hinhanh, String giasp, String mota, int loaisp) {
+    public sanpham(int id, String tensanpham, String hinhanhsanpham, String giasanpham, String motasanpham, int idloaisanpham) {
         this.id = id;
-        this.tensp = tensp;
-        this.hinhanh = hinhanh;
-        this.giasp = giasp;
-        this.mota = mota;
-        this.loaisp = loaisp;
-
+        this.tensanpham = tensanpham;
+        this.hinhanhsanpham = hinhanhsanpham;
+        this.giasanpham = giasanpham;
+        this.motasanpham = motasanpham;
+        this.idloaisanpham = idloaisanpham;
     }
 
     public int getId() {
@@ -29,45 +27,43 @@ public class sanpham {
         this.id = id;
     }
 
-    public String getTensp() {
-        return tensp;
+    public String getTensanpham() {
+        return tensanpham;
     }
 
-    public void setTensp(String tensp) {
-        this.tensp = tensp;
+    public void setTensanpham(String tensanpham) {
+        this.tensanpham = tensanpham;
     }
 
-    public String getHinhanh() {
-        return hinhanh;
+    public String getHinhanhsanpham() {
+        return hinhanhsanpham;
     }
 
-    public void setHinhanh(String hinhanh) {
-        this.hinhanh = hinhanh;
+    public void setHinhanhsanpham(String hinhanhsanpham) {
+        this.hinhanhsanpham = hinhanhsanpham;
     }
 
-    public String getGiasp() {
-        return giasp;
+    public String getGiasanpham() {
+        return giasanpham;
     }
 
-    public void setGiasp(String giasp) {
-        this.giasp = giasp;
+    public void setGiasanpham(String giasanpham) {
+        this.giasanpham = giasanpham;
     }
 
-    public String getMota() {
-        return mota;
+    public String getMotasanpham() {
+        return motasanpham;
     }
 
-    public void setMota(String mota) {
-        this.mota = mota;
+    public void setMotasanpham(String motasanpham) {
+        this.motasanpham = motasanpham;
     }
 
-    public int getLoaisp() {
-        return loaisp;
+    public int getIdloaisanpham() {
+        return idloaisanpham;
     }
 
-    public void setLoaisp(int loaisp) {
-        this.loaisp = loaisp;
+    public void setIdloaisanpham(int idloaisanpham) {
+        this.idloaisanpham = idloaisanpham;
     }
-
-
 }

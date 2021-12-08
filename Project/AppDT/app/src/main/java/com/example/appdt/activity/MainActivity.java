@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -26,9 +27,9 @@ import com.example.appdt.adapter.loaisanphamAdapter;
 import com.example.appdt.adapter.sanphamAdapter;
 import com.example.appdt.model.loaisp;
 import com.example.appdt.model.sanpham;
+
 import com.example.appdt.retrofit.api;
-import com.example.appdt.retrofit.Client;
-import com.example.appdt.utils.checkconnect;
+
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.IOException;
@@ -40,6 +41,9 @@ import java.util.List;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,59 +59,65 @@ public class MainActivity extends AppCompatActivity {
     api api;
     List<sanpham> mangsp;
     sanphamAdapter spAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        api = Client.getInstance(checkconnect.BASE_URL).create(api.class);
+
         find();
-
+        ActionViewFlipper();
         ActionBar();
-        if(isConnected(this)){
+        getproduct();
+        gettypeproduct();
+    }
+    private void setproduct(List<sanpham> array) {
 
-            ActionViewFlipper();
-            gettypeproduct();
-            getproduct();
-
-        }else{
-            Toast.makeText(getApplicationContext(),"khong co internet",Toast.LENGTH_LONG).show();
-        }
+        spAdapter = new sanphamAdapter(this, array);
+        recyclerViewMainScreen.setAdapter(spAdapter);
     }
     private void getproduct() {
-        compositeDisposable.add(api.getsp()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        sanphammodel -> {
-                            if (sanphammodel.isSuccess()){
-                                mangsp = sanphammodel.getResult();
-                                spAdapter = new sanphamAdapter(getApplicationContext(),mangsp);
-                                recyclerViewMainScreen.setAdapter(spAdapter);
+        api.opi.getsp().enqueue(new Callback<List<sanpham>>() {
+            @Override
+            public void onResponse(Call<List<sanpham>> call, Response<List<sanpham>> response) {
+                Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_LONG).show();
+                List<sanpham> abc = (List<sanpham>) response.body();
+                setproduct((List<sanpham>) abc);
+//                Log.e("lstP", String.valueOf(abc));
+            }
+
+            @Override
+            public void onFailure(Call<List<sanpham>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+    private void settypeproduct(List<loaisp> result) {
+
+        loaisanphamAdapter = new loaisanphamAdapter(this, result);
+        listViewMainScreen.setAdapter(loaisanphamAdapter);
 
 
-                            }
-                        },
-                        throwable -> {
-                            Toast.makeText(getApplicationContext(),"Khong ket noi duoc voi server"+ throwable.getMessage(),Toast.LENGTH_LONG).show();
-                        }
-                ));
     }
     private void gettypeproduct() {
+        api.opi.getloaisp().enqueue(new Callback<List<loaisp>>() {
+            @Override
+            public void onResponse(Call<List<loaisp>> call, Response<List<loaisp>> response) {
+                Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_LONG).show();
+                List<loaisp> lsp = (List<loaisp>) response.body();
+                settypeproduct((List<loaisp>) lsp);
 
-        compositeDisposable.add(api.getloaisp()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        loaispmodel -> {
-                            if (loaispmodel.isSuccess()){
-                                mangloaisp = loaispmodel.getResult();
-                                loaisanphamAdapter = new loaisanphamAdapter(getApplicationContext(),mangloaisp);
-                                listViewMainScreen.setAdapter(loaisanphamAdapter);
-                            }
-                        }
-                ));
+            }
+
+            @Override
+            public void onFailure(Call<List<loaisp>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
+
 
     private void ActionViewFlipper() {
         List<String> Banner = new ArrayList<>();
@@ -158,43 +168,6 @@ public class MainActivity extends AppCompatActivity {
         mangsp = new ArrayList<>();
 
     }
-    public static boolean isConnected(Context context) {
-        ConnectivityManager cm = (ConnectivityManager)context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null && activeNetwork.isConnected()) {
-            try {
-                URL url = new URL("http://www.google.com/");
-                HttpURLConnection urlc = (HttpURLConnection)url.openConnection();
-                urlc.setRequestProperty("User-Agent", "test");
-                urlc.setRequestProperty("Connection", "close");
-                urlc.setConnectTimeout(1000); // mTimeout is in seconds
-                urlc.connect();
-                if (urlc.getResponseCode() == 200) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (IOException e) {
-                Log.i("warning", "Error checking internet connection", e);
-                return false;
-            }
-        }
-
-        return false;
-
-    }
-//    private boolean isConnected(Context context){
-//        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-//        NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-//        NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-//        if((wifi != null && wifi.isConnected()) || (mobile != null && mobile.isConnected()) ){
-//            return true;
-//        }else {
-//            return false;
-//        }
-//    }
 
     @Override
     protected void onDestroy() {

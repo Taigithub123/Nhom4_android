@@ -5,7 +5,7 @@ import java.util.List;
 public class loaisp {
     public int ID;
     public String tenloaisanpham;
-    public String hinhanhloaisanpham;
+    public String hinhanhsanpham;
 
 
 //    public loaisp(int ID, String tenloaisanpham, String hinhanhloaisanpham) {
@@ -18,7 +18,7 @@ public class loaisp {
     public loaisp(int ID, String tenloaisanpham, String hinhanhloaisanpham ) {
         this.ID = ID;
         this.tenloaisanpham = tenloaisanpham;
-        this.hinhanhloaisanpham = hinhanhloaisanpham;
+        this.hinhanhsanpham = hinhanhloaisanpham;
 
     }
 
@@ -38,12 +38,11 @@ public class loaisp {
         this.tenloaisanpham = tenloaisanpham;
     }
 
-    public String getHinhanhloaisanpham() {
-        return hinhanhloaisanpham;
+    public String getHinhanhsanpham() {
+        return hinhanhsanpham;
     }
 
-    public void setHinhanhloaisanpham(String hinhanhloaisanpham) {
-        this.hinhanhloaisanpham = hinhanhloaisanpham;
+    public void setHinhanhsanpham(String hinhanhsanpham) {
+        this.hinhanhsanpham = hinhanhsanpham;
     }
-
 }
