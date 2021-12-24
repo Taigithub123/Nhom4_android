@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ import com.example.appbanhang.retrofit.AppBanHang;
 import com.example.appbanhang.retrofit.RetrofitClient;
 import com.example.appbanhang.utils.utils;
 import com.google.android.material.navigation.NavigationView;
+import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     AppBanHang appBanHang;
     List<SanPhamMoi> mangSpMoi;
     SanPhamMoiAdapter spAdapter;
+    NotificationBadge badge;
+    FrameLayout frameLayout;
 
 
     @Override
@@ -174,14 +178,39 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navigationView);
         listViewmanhinhchinh = findViewById(R.id.listViewmanhinhchinh);
         drawerLayout = findViewById(R.id.drawerLayout);
+        badge = findViewById(R.id.menu_sl);
+        frameLayout=findViewById(R.id.framegiohang);
         //khoi tao list
         mangloaisp = new ArrayList<>();
         mangSpMoi = new ArrayList<>();
         if (utils.manggiohang == null){
             utils.manggiohang = new ArrayList<>();
+        }else{
+            int totalItem = 0;
+            for (int i=0; i<utils.manggiohang.size(); i++){
+                totalItem = totalItem + utils.manggiohang.get(i).getSoluong();
+            }
+            badge.setText(String.valueOf(totalItem));
+        }
+        frameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent giohang = new Intent(getApplicationContext(), GioHangActivity.class);
+                startActivity(giohang);
+            }
+        });
+    }
+
+    @Override
+        protected void onResume(){
+            super.onResume();
+            int totalItem = 0;
+            for (int i=0; i<utils.manggiohang.size(); i++){
+                totalItem = totalItem + utils.manggiohang.get(i).getSoluong();
+            }
+            badge.setText(String.valueOf(totalItem));
         }
 
-    }
     private boolean isConnected (Context context){
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);

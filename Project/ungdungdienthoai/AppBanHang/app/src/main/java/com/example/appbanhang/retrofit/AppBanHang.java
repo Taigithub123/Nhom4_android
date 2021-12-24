@@ -2,6 +2,7 @@ package com.example.appbanhang.retrofit;
 
 import com.example.appbanhang.model.LoaiSpModel;
 import com.example.appbanhang.model.SanPhamMoiModel;
+import com.example.appbanhang.model.UserModel;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.Field;
@@ -22,5 +23,14 @@ public interface AppBanHang {
             @Field("page") int page,
             @Field("loai") int loai
     );
+    @POST("dangki.php")
+    @FormUrlEncoded
+    Observable<UserModel> dangky(
+            @Field("email") String email,
+            @Field("password") String pass,
+            @Field("username") String username,
+            @Field("mobile") String mobile
+    );
+
 
 }

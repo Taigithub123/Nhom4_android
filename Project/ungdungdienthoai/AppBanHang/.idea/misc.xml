@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/Nhom4_android/Project/ungdungdienthoai/AppBanHang/app/src/main/res/drawable/ic_email_24.xml" value="0.2203125" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/Nhom4_android/Project/ungdungdienthoai/AppBanHang/app/src/main/res/layout/activity_chi_tiet2.xml" value="0.18" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/Nhom4_android/Project/ungdungdienthoai/AppBanHang/app/src/main/res/layout/activity_dangkiactivity.xml" value="0.22" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/Nhom4_android/Project/ungdungdienthoai/AppBanHang/app/src/main/res/layout/activity_dangnhapctivity.xml" value="0.15081521739130435" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/Nhom4_android/Project/ungdungdienthoai/AppBanHang/app/src/main/res/layout/activity_main.xml" value="0.12635869565217392" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/Nhom4_android/Project/ungdungdienthoai/AppBanHang/app/src/main/res/layout/item_giohang.xml" value="0.18206521739130435" />
         <entry key="..\:/Users/Huy Hoang/AndroidStudioProjects/AppBanHang/app/src/main/res/drawable/spinner.xml" value="0.26205128205128203" />
         <entry key="..\:/Users/Huy Hoang/AndroidStudioProjects/AppBanHang/app/src/main/res/layout/activity_chi_tiet2.xml" value="0.25" />
         <entry key="..\:/Users/Huy Hoang/AndroidStudioProjects/AppBanHang/app/src/main/res/layout/activity_dien_thoai.xml" value="0.24635416666666668" />
