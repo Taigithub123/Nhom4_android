@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:drawablePadding="5dp"
             android:inputType="textEmailAddress"
-
+            android:id="@+id/emaildn"
             android:drawableLeft="@drawable/ic_email_24"
             android:hint="Email"
             />
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:drawablePadding="5dp"
-
+            android:id="@+id/passdn"
             android:drawableLeft="@drawable/ic_key_24"
             android:hint="Password"
             />
@@ -75,6 +75,7 @@
         android:textSize="18dp"
         android:text="Đăng nhập"/>
     <LinearLayout
+        android:id="@+id/line6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/btndangnhap"
@@ -95,8 +96,22 @@
             android:textStyle="bold"
             android:id="@+id/dangky"
             android:textSize="20dp"
+            android:textColor="@color/black"
             android:layout_marginLeft="5dp"/>
 
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/line6"
+        android:text="Quên mật khẩu"
+        android:textSize="20dp"
+        android:id="@+id/quenmatkhau"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

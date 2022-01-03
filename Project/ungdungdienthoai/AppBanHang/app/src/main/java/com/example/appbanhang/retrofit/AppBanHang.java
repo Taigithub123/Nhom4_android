@@ -25,11 +25,25 @@ public interface AppBanHang {
     );
     @POST("dangki.php")
     @FormUrlEncoded
-    Observable<UserModel> dangky(
+    Observable<UserModel> dangkytk(
             @Field("email") String email,
             @Field("password") String pass,
             @Field("username") String username,
             @Field("mobile") String mobile
+    );
+    @POST("dangnhap.php")
+    @FormUrlEncoded
+    Observable<UserModel> dangnhap(
+            @Field("email") String email,
+            @Field("password") String pass
+
+    );
+    @POST("reset.php")
+    @FormUrlEncoded
+    Observable<UserModel> resetpass(
+            @Field("email") String email
+
+
     );
 
 
