@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,7 @@ EditText email, pass;
 Button btndangnhap;
 AppBanHang appBanHang;
 CompositeDisposable compositeDisposable= new CompositeDisposable();
+Boolean islogin = false;
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,23 +63,7 @@ private void initcontrol(){
                 }else {
                     Paper.book().write("email", str_email);
                     Paper.book().write("pass", str_pass);
-                    compositeDisposable.add(appBanHang.dangnhap(str_email,str_pass)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    userModel -> {
-                                    if (userModel.isSuccess()){
-                                        utils.user_current=userModel.getResult().get(0);
-                                        Intent intent=new Intent(getApplicationContext(),MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                        Toast.makeText(getApplicationContext(), "Đăng nhập thành công", Toast.LENGTH_LONG).show();
-}
-                                    },
-                                    throwable->{
-                                        Toast.makeText(getApplicationContext(),throwable.getMessage() , Toast.LENGTH_LONG).show();
-                                    }
-                            ));
+                    dangnhap(str_email, str_pass );
                 }
             }
         });
@@ -94,8 +80,43 @@ private void initcontrol(){
         if(Paper.book().read("email")!=null && Paper.book().read("pass")!=null){
             email.setText(Paper.book().read("email"));
         pass.setText(Paper.book().read("pass"));
+        if(Paper.book().read("islogin")!=null){
+            boolean flag=Paper.book().read("islogin");
+            if(flag){
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dangnhap(Paper.book().read("email"), Paper.book().read("pass"));
+                    }
+                }, 1000);
+            }
+        }
         }
     }
+    private void dangnhap(String email, String pass){
+        compositeDisposable.add(appBanHang.dangnhap(email,pass)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        userModel -> {
+                            if (userModel.isSuccess()){
+                                islogin =true;
+                                Paper.book().write("islogin", islogin);
+                                utils.user_current=userModel.getResult().get(0);
+                                Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                                Toast.makeText(getApplicationContext(), "Đăng nhập thành công", Toast.LENGTH_LONG).show();
+                            }else{
+                                Toast.makeText(getApplicationContext(), "Sai tên đăng nhập hoặc mật khẩu", Toast.LENGTH_LONG).show();
+                            }
+                        },
+                        throwable->{
+                            Toast.makeText(getApplicationContext(),throwable.getMessage() , Toast.LENGTH_LONG).show();
+                        }
+                ));
+    }
+
 
     @Override
     protected void onResume() {

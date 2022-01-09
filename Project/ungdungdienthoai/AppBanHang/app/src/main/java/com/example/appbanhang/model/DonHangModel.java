@@ -1,2 +1,33 @@
-package com.example.appbanhang.model;public class DonHangModel {
+package com.example.appbanhang.model;
+
+import java.util.List;
+import com.example.appbanhang.model.DonHang;
+public class DonHangModel {
+    boolean success;
+    String message;
+    List<DonHang> result;
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public List<DonHang> getResult() {
+        return result;
+    }
+
+    public void setResult(List<DonHang> result) {
+        this.result = result;
+    }
 }
